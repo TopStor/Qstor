@@ -2,24 +2,24 @@
 
 . /etc/rc.subr
 
-name="TopStor"
+name="QuickStor"
 start_cmd="${name}_start"
 stop_cmd="${name}_stop"
 rcvar=TopStor_enable
-command="/TopStor/Topstor.sh"
+command="/TopStor/Quickstor.sh"
 command_interpreter="/usr/local/bin/zsh"
 load_rc_config $name
-: ${TopStor_enable:=no}
+: ${QuickStor_enable:=no}
 : ${TopStor_msg="Nothing started."}
-TopStor_start()
+QuickStor_start()
 {
 	echo "$TopStor_msg"
-	/TopStor/Topstor.sh &
+	/TopStor/Quickstor.sh &
 }
-TopStor_stop()
+QuickStor_stop()
 {
 	echo " it is stopped thanking God"
-	pkill -HUP -f Topstor
+	pkill -HUP -f Quickstor
 	touch /TopStor/txt/flag
 }
 
