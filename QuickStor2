@@ -10,7 +10,7 @@ command="/TopStor/Quickstor2.sh"
 command_interpreter="/usr/local/bin/zsh"
 load_rc_config $name
 : ${QuickStor_enable:=no}
-: ${TopStor_msg="Nothing started."}
+: ${TopStor_msg="QuickStor2 started sccessfully."}
 QuickStor2_start()
 {
 	echo "$TopStor_msg"

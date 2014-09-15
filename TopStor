@@ -10,7 +10,7 @@ command="/TopStor/Topstor.sh"
 command_interpreter="/usr/local/bin/zsh"
 load_rc_config $name
 : ${TopStor_enable:=no}
-: ${TopStor_msg="Nothing started."}
+: ${TopStor_msg="TopStor started successfuly."}
 TopStor_start()
 {
 	echo "$TopStor_msg"
