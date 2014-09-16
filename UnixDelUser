@@ -1,13 +1,12 @@
 #!/usr/local/bin/zsh
 web="/usr/local/www/apache24/data/des17/Data/status.log";
-username=$1
+username=$1;
 echo Deleting user $username...> $web;
 pw user del $username 2>txt/err.txt;
-echo DONE..user $username is deleted > $web
-./UnixListUsers
-err=`du -k txt/err.txt | awk '{print $1}'`;
+echo DONE..user $username is deleted > $web;
+err=`wc -c txt/err.txt | awk '{print $1}'`;
 if [[ $err -ge 3 ]]; then
-	cat txt/err.txt > $web
-fi
+	cat txt/err.txt > $web;
+fi;
 
 
