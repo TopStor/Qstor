@@ -11,8 +11,11 @@ trap ClearExit HUP
 while true; do 
 {
 read line < /tmp/msgfile
-echo TopStor service alive >/TopStor/txt/status.txt
-echo $line > /TopStor/txt/msgfile
+echo $line > /TopStor/tmpline
+request=`echo $line | awk '{print $1}'`
+reqparam=`echo $line | cut -d " " -f2-`
+echo $request > /TopStor/tmpline2
+echo $reqparam  >> /TopStor/tmpline2
 }
 done;
 echo it is dead >/TopStor/txt/status.txt
