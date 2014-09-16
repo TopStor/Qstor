@@ -1,0 +1,5 @@
+#!/usr/local/bin/zsh
+username=$1
+pw user del $username
+
+
