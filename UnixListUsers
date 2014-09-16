@@ -1,8 +1,8 @@
 #! /usr/local/bin/zsh
+cd /TopStor/
 web='/usr/local/www/apache24/data/des17/Data/status.log';
 webusers='/usr/local/www/apache24/data/des17/Data/listusers.txt'
-cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 | grep -v moataz >$webusers ;
-err=`du -k txt/err.txt | awk '{print $1}'`;
-if [[ $err -ge 3 ]]; then
-	cat txt/err.txt > $web;
-fi
+namearray=( `cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 | grep -v moataz ` ); 
+nameforjson=`echo $namearray | sed 's/ /:/g'` ;
+jsonname=`./jsonthis.sh $nameforjson`;
+echo $jsonname >$webusers ;
