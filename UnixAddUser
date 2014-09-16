@@ -1,5 +1,11 @@
 #! /usr/local/bin/zsh
-username=`echo $1 | awk '{print $1}'`
-userpass=`echo $1 | awk '{print $2}'`
-echo $userpass | pw add user $username -h 0 2> txt/err.txt
-
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+echo Adding user.... > $web;
+username=`echo $1 | awk '{print $1}'`;
+userpass=`echo $1 | awk '{print $2}'`;
+echo $userpass | pw add user $username -h 0 2> txt/err.txt;
+echo DONE...user $username is added > $web;
+err=`du -k txt/err.txt | awk '{print $1}'`;
+if [[ $err -ge 3 ]]; then
+	cat txt/err.txt > $web;
+fi
