@@ -4,9 +4,10 @@ rm txt/err;
 echo Adding user.... > $web;
 username=`echo $1 | awk '{print $1}'`;
 userpass=`echo $1 | awk '{print $2}'`;
-( echo $userpass | pw add user $username -h 0 ) 2> txt/err.txt;
+( echo $userpass | pw useradd  $username -m -h 0 ) 2> txt/err.txt;
+( echo $userpass; echo $userpass) | /usr/local/bin/smbpasswd -s -a $username 2>> txt/err.txt;
 err=`wc -c  txt/err.txt | awk '{print $1}'`;
-if [[ $err >  2  ]]; then
+if [[ $err >  4  ]]; then
 	cat txt/err.txt > $web;
 else 
  echo DONE...user $username is added > $web; 
