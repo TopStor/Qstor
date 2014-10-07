@@ -1,0 +1,7 @@
+20 21 30 09 * /TopStor/Snapshotcron 20 '*'/20 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.30.21.20 33
+20 21 30 09 * /TopStor/Snapshotcron 20 '*'/20 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.30.21.20 33
+45 21 16 09 * /TopStor/Snapshotcron 45 '*'/20 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.16.21.45 33
+00 22 08 10 * /TopStor/Snapshotcron 00 '*'/01 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.08.22.00 4
+00 22 08 10 * /TopStor/Snapshotcron 00 '*'/01 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.08.22.00 4
+00 22 08 10 * /TopStor/Snapshotcron 00 '*'/01 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.08.22.00 4
+00 22 08 10 * /TopStor/Snapshotcron 00 '*'/01 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.08.22.00 4

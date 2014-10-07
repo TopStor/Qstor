@@ -1,0 +1,1 @@
+46 22 09 10 * /TopStor/Snapshotcron 46 '*'/19 '*' '*' '*' /TopStor/Snapshotnow Data/SQL hourly.09.22.46 3

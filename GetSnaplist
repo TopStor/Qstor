@@ -1,0 +1,8 @@
+#! /usr/local/bin/zsh
+cd /TopStor/;
+websnaps='/usr/local/www/apache24/data/des17/Data/listsnaps.txt';
+namearray=( `zfs list -t snapshot -H | grep -v zroot | sed 's/Data\///g' | grep -v Data | awk '{print $1}'` ); 
+nameforjson=`echo $namearray | sed 's/ /:/g'` ;
+jsonname=`./jsonthis.sh $nameforjson`;
+echo $jsonname
+echo $jsonname >$websnaps ;
