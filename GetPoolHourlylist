@@ -1,8 +1,10 @@
 #! /usr/local/bin/zsh
 cd /TopStor/;
 websnaps='/usr/local/www/apache24/data/des17/Data/Hourlylist.txt';
-list1=`crontab -l | grep hourly`; 
-list2=`echo $list1 | awk '{print $13"@"$14"_keep="$15}'`;  
+list1=`crontab -l | awk -F"now" '{print $2}' | grep hourly`; 
+echo $list1 > tmp;
+list2=`echo $list1 | awk '{print $1"@"$2}'`;  
+echo $list2 >> tmp
 nameforjson=`echo $list2 | awk '{print $1" o "}' | tr -d '\n'` ;
 jsonname=`./jsonthis2.sh $nameforjson`;
 echo $jsonname > $websnaps 2>txt/err.txt

@@ -5,8 +5,7 @@ echo Deleteing Snapshot schedule.... > $web;
 rm txt/err.txt;
 rm txt/cronthis.txt;
 crontab -l > txt/cronthis.txt;
-echo 1.$1 . 2.$2 . 3.$3 . 4.$4 . 5.$5 . 6.$6 . 7.$7 . 8.$8 . 9.$9 . 10.$10  > tmp;
-snapsched=`echo $1 | awk -F_ '{print $1}' | awk -F@ '{print $2}'`;
+snapsched=`echo $@ | awk -F@ '{print $2}'`;
 cat txt/cronthis.txt | grep -v $snapsched > txt/cronthis.txt
 crontab txt/cronthis.txt 2>txt/err.txt;
 err=`wc -c  txt/err.txt | awk '{print $1}'`;
