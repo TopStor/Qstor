@@ -3,8 +3,9 @@ web='/usr/local/www/apache24/data/des17/Data/status.log';
 rm txt/err.txt
 rm txt/cronthis.txt
 echo Adding snapshot schedule.... > $web;
-every=`echo $@ | awk '{print $1}'` ;
-keep=`echo $@ | awk '{print $2}'`
+every=0; ev=`echo $@ | awk '{print $1}'`; every=$(($every+$ev)) ; if (($every < 1)); then every=1; fi
+keep=0; k=`echo $@ | awk '{print $2}'`; keep=$(($keep+$k)); if (($keep < 1)); then keep=1 ; fi
+ 
 DG=` echo $@ | awk '{print $3}'`; 
 FileS=` echo $@ | awk '{print $4}'`;
 crontab -l > txt/cronthis.txt
