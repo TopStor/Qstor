@@ -1,2 +1,0 @@
-* */2 * * * /TopStor/Snapshotnow Data/SQL hourly.2.7
-*/06 * * * * /TopStor/Snapshotnow Data/SQL Minutely.06.3

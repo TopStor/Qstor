@@ -1,0 +1,19 @@
+#! /usr/local/bin/zsh
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+rm txt/err.txt
+rm txt/cronthis.txt
+now1=`date +%y%m%d%H%M%S`;
+echo Creating  snapshot.... > $web;
+DG=`echo $@ | awk '{print $1}'`;
+FileS=` echo $@ | awk '{print $2}'`;
+crontab -l > txt/cronthis.txt
+/TopStor/Snapshotnow $DG/$FileS Once.$now1 2> txt/err.txt >> txt/cronthis.txt
+crontab txt/cronthis.txt 2>>txt/err.txt
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...Snapshot $DG/$FileS@Once.$now1 is added > $web; 
+fi;
+
+
