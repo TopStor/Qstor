@@ -1,0 +1,8 @@
+#! /usr/local/bin/zsh
+cd /TopStor/;
+websnaps='/usr/local/www/apache24/data/des17/Data/Vollist.txt';
+list1=`zfs list | awk '{print $1}' | grep Data/ | awk -F/ '{print $2}'`; 
+nameforjson=`echo $list1 | awk '{print $1" o "}' | tr -d '\n'` ;
+jsonname=`./jsonthis2.sh $nameforjson`;
+echo $jsonname > $websnaps 2>txt/err.txt
+

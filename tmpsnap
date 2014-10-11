@@ -1,0 +1,21 @@
+#! /usr/local/bin/zsh
+cd /TopStor
+web='/usr/local/www/apache24/data/des17/Data/statusglobal.log';
+echo creating Snapshot $@.... > $web;
+rm txt/errsnap.txt;
+oper=$@;
+keep=`echo $oper | awk -F. '{print $NF}'`;
+currentsnaps=`zfs list -t snapshot | grep Data | grep "$oper" | awk '{print $1}'`;
+oldsnap=`echo $currentsnaps | awk -F. '{print $NF}` | awk '{if ($1 < min) min=$1}END{print min}'`;
+currentsnaps=$(($currentsnaps+1));
+echo $currentsnaps;
+echo old=$oldsnap;
+/sbin/zfsdkl destroy dd$@  2>txt/err.txt;
+err=`wc -c  txt/errsnap.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/errsnap.txt > $web;
+else 
+ echo DONE...Snapshot $@ is deleted > $web; 
+fi;
+sleep 2;
+./GetSnaplist

@@ -1,0 +1,14 @@
+#! /usr/local/bin/zsh
+cd /TopStor
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+echo Deleteing Snapshot $@.... > $web;
+rm txt/err.txt;
+/sbin/zfs destroy $@  2>txt/err.txt;
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...Snapshot $@ is deleted > $web; 
+fi;
+sleep 2;
+./GetSnaplist

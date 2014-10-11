@@ -1,0 +1,4 @@
+5 */1 * * * /TopStor/Snapshotnow Data/Homes hourly.5.1.1
+5 */1 * * * /TopStor/Snapshotnow Data/Homes hourly.5.1.1
+*/2 * * * * /TopStor/Snapshotnow Data/Homes Minutely.2.4
+30 20 * * Sat /TopStor/Snapshotnow Data/Homes Weekly.20.30.Sat.3
