@@ -1,8 +1,9 @@
 #! /usr/local/bin/zsh
 cd /TopStor/;
 websnaps='/usr/local/www/apache24/data/des17/Data/listsnaps.txt';
-namearray=( `/sbin/zfs list -t snapshot -H | grep -v zroot | sed 's/Data\///g' | grep -v Data | awk '{print $1}'` ); 
-nameforjson=`echo $namearray | sed 's/ /:/g'` ;
+namearray=`/sbin/zfs list -t snapshot -H -o name,creation | grep Data | awk -F@ '{print $2}' | awk '{$NF="";$1=$1"@"; print $0}' | awk '{$1=$1"@@"; print $0}'| sed 's/ /_/g' | sed 's/:/;/g'`; 
+nameforjson=`echo $namearray | awk '{$NF=$NF":";print $0}' | tr -d '\n' | awk -F: '{$NF="mezo"; print $0}' | sed 's/ mezo//g' | sed 's/ /:/g' ` ;
 jsonname=`./jsonthis.sh $nameforjson`;
-echo $namearray;
-echo $jsonname >$websnaps ;
+jsonmod=` echo $jsonname | sed 's/@@/  /g' | sed 's/_/ /g' | sed 's/;/:/g'`
+echo $jsonmod
+echo $jsonmod >$websnaps ;

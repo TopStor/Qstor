@@ -10,10 +10,8 @@ keep=`echo $oper | awk -F. '{print $NF}'`;
 currentsnaps=`/sbin/zfs list -t snapshot | grep Data | grep "$oper2" | awk '{print $1}'`;
 oldsnap=`echo $currentsnaps | sort | head -n 1` ;
 countsnap=`echo $currentsnaps | wc -l | awk '{print $1}'`;
-echo count=$countsnap
 countsnap=$(($countsnap+1));
 keep=$(($keep+0));
-echo $keep, $countsnap
 timenow=`date`;
 if (( $countsnap >  $keep )); then 
 	echo $timenow: have to delete $oldsnap >> $web;
@@ -21,7 +19,6 @@ if (( $countsnap >  $keep )); then
 fi
 newsnap2=`echo $oper2.$stamp`;
 newsnap=`echo $oper1@$newsnap2`;
-echo $newsnap
 /sbin/zfs snapshot $newsnap 2>> txt/err.txt
 err=`wc -c  txt/err.txt | awk '{print $1}'`;
 if [[ $err >  4  ]]; then
