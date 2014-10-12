@@ -3,7 +3,8 @@ cd /TopStor
 web='/usr/local/www/apache24/data/des17/Data/status.log';
 echo Deleteing Snapshot $@.... > $web;
 rm txt/err.txt;
-snapsearch=`echo $@ | awk -F@ '{print $1}'`;
+snapsearch=`echo $@ | awk -F@ '{print $1}' | awk -F. '{print $NF}'`;
+snapsearch=$(($snapsearch+0));
 snapshot=` /sbin/zfs list -t snapshot -o name | grep "$snapsearch" `; 
 /sbin/zfs destroy $snapshot  2>txt/err.txt;
 err=`wc -c  txt/err.txt | awk '{print $1}'`;

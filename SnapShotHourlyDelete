@@ -15,4 +15,4 @@ else
  echo DONE...Snapshot $snapsched is deleted > $web; 
 fi;
 sleep 2;
-./GetPoolHourlylist
+./GetPoolHourlylist >> $web

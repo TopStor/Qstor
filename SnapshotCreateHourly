@@ -17,5 +17,4 @@ if [[ $err >  4  ]]; then
 else 
  echo DONE...Snapshot hourly.$min.$every.$keep is added > $web; 
 fi;
-sleep 2
-./GetPoolHourlylist
+./GetPoolHourlylist >> $web
