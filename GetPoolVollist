@@ -8,13 +8,6 @@ used=`/sbin/zfs get -Hp used | grep Data/ | grep -v @ | awk -v CONVFMT=%.5g '{gs
 creation=`/sbin/zfs get -H creation | grep Data/ | grep -v @ | awk  '{$3=$5"-"$4"-"$7; print $1" "$3}'`;
 compressratio=`/sbin/zfs get -Hp compressratio | grep Data/ | grep -v @ | awk  '{print $1" "$3}'`;
 dedup=`/sbin/zfs get -Hp dedup | grep Data/ | grep -v @ | awk '{print $1" "$3}'`;
-echo q=$quota 
-echo lo=$logicalused
-echo av=$avail
-echo us=$used
-echo cr=$creation
-echo co=$compressratio
-echo ded=$dedup
 alllist="";
 echo $avail | awk '{print $1}' | while read -r line; do
 	snaps=`/sbin/zfs list -t snapshot | grep "$line" | wc -l | sed 's/ //g'`
@@ -28,9 +21,7 @@ echo $avail | awk '{print $1}' | while read -r line; do
 	line2=`echo $line | awk -F/ '{print $2}'`;
 	alllist=$alllist$line2" "$q"_"$us"_"$snaps"_"$lo"_"$cr"_"$av"_"$co"_"$de" ";
 done;
-echo alllist=$alllist
 nameforjson=`echo $alllist | tr -d '\n'` ;
-echo $nameforjson; 
 jsonname=`./jsonthis2.sh $nameforjson`;
 echo $jsonname > $websnaps 2>txt/err.txt
 
