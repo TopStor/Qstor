@@ -1,10 +1,10 @@
 #! /usr/local/bin/zsh
 cd /TopStor/;
 websnaps='/usr/local/www/apache24/data/des17/Data/Vollist.txt';
-quota=`/sbin/zfs get -Hp quota | grep Data/ | grep -v @ | awk -v CONVFMT=%2.5f '{gsub($3,$3/1048576); print $1" "$3}'`;
-logicalused=`/sbin/zfs get -Hp logicalused | grep Data/ | grep -v @ | awk -v CONVFMT=%.5g '{gsub($3,$3/1048576); print $1" "$3}'`
-avail=`/sbin/zfs get -Hp avail | grep Data/ | grep -v @ | awk -v CONVFMT=%.5g '{gsub($3,$3/1048576); print $1" "$3}'`;
-used=`/sbin/zfs get -Hp used | grep Data/ | grep -v @ | awk -v CONVFMT=%.5g '{gsub($3,$3/1048576); print $1" "$3}'` 
+quota=`/sbin/zfs get -Hp quota | grep Data/ | grep -v @ | awk -v CONVFMT=%.3g '{gsub($3,$3/1000000000); print $1" "$3}'`;
+logicalused=`/sbin/zfs get -Hp logicalused | grep Data/ | grep -v @ | awk -v CONVFMT=%.3g '{gsub($3,$3/1000000000); print $1" "$3}'`
+avail=`/sbin/zfs get -Hp avail | grep Data/ | grep -v @ | awk -v CONVFMT=%.3g '{gsub($3,$3/1000000000); print $1" "$3}'`;
+used=`/sbin/zfs get -Hp used | grep Data/ | grep -v @ | awk -v CONVFMT=%.3g '{gsub($3,$3/1000000000); print $1" "$3}'` 
 creation=`/sbin/zfs get -H creation | grep Data/ | grep -v @ | awk  '{$3=$5"-"$4"-"$7; print $1" "$3}'`;
 compressratio=`/sbin/zfs get -Hp compressratio | grep Data/ | grep -v @ | awk  '{print $1" "$3}'`;
 dedup=`/sbin/zfs get -Hp dedup | grep Data/ | grep -v @ | awk '{print $1" "$3}'`;
