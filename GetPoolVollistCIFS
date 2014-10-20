@@ -1,6 +1,6 @@
 #! /usr/local/bin/zsh
 cd /TopStor/;
-websnaps='/usr/local/www/apache24/data/des17/Data/Vollist.txt';
+websnaps='/usr/local/www/apache24/data/des17/Data/Vollist.txtCIFS';
 quota=`/sbin/zfs get -t filesystem -Hp quota | grep Data/  | awk -v CONVFMT=%2.5f '{gsub($3,$3/1048576); print $1" "$3}'`;
 logicalused=`/sbin/zfs get -t filesystem -Hp logicalused | grep Data/ | awk -v CONVFMT=%.5g '{gsub($3,$3/1048576); print $1" "$3}'`
 avail=`/sbin/zfs get -t filesystem -Hp avail | grep Data/ | awk -v CONVFMT=%.5g '{gsub($3,$3/1048576); print $1" "$3}'`;
@@ -8,7 +8,7 @@ used=`/sbin/zfs get -t filesystem -Hp used | grep Data/ | awk -v CONVFMT=%.5g '{
 creation=`/sbin/zfs get -t filesystem -H creation | grep Data/  | awk  '{$3=$5"-"$4"-"$7; print $1" "$3}'`;
 compressratio=`/sbin/zfs get -t filesystem -Hp compressratio | grep Data/ | awk  '{print $1" "$3}'`;
 dedup=`/sbin/zfs get -t filesystem -Hp dedup | grep Data/ | awk '{print $1" "$3}'`;
-NFSshare=`/sbin/zfs get -t filesystem -Hp sharenfs | grep Data/ | grep Yes | awk '{print $1}'`;
+NFSshare=`/sbin/zfs get -t filesystem -Hp sharenfs | grep Data/ | grep off | awk '{print $1}'`;
 alllist="";
 echo $NFSshare | while read -r line; do
 	q=` echo $quota | grep $line | awk '{print $2}'`;
