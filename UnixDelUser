@@ -4,6 +4,7 @@ username=$1;
 echo Deleting user $username...> $web;
 /usr/local/bin/smbpasswd -d $username;
 pw user del $username -r  2>txt/err.txt;
+rm -R  /Data/Common/$username;
 echo DONE..user $username is deleted > $web;
 err=`wc -c txt/err.txt | awk '{print $1}'`;
 if [[ $err -ge 3 ]]; then

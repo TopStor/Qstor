@@ -5,7 +5,7 @@ echo Creating  Volume .... > $web;
 name=`echo $@ | awk '{print $2}'`;
 DG=`echo $@ | awk '{print $1}'`;
 quota=`echo $@ | awk '{print $3}'`;
-/sbin/zfs create -o sharenfs=Yes -o quota=$quota -o dedup=on -o compression=on  $DG/$name 2> txt/err.txt 
+/sbin/zfs create -o quota=$quota -o dedup=on -o compression=on  $DG/$name 2> txt/err.txt 
 err=`wc -c  txt/err.txt | awk '{print $1}'`;
 if [[ $err >  4  ]]; then
 	cat txt/err.txt > $web;
