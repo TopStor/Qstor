@@ -4,14 +4,19 @@ rm txt/err;
 domain=`echo $@ | awk '{ print $1 }' `;
 domcapital=`echo $domain | tr '[:lower:]' '[:upper:]'`;
 domsmall=`echo $domain | tr '[:upper:]' '[:lower:]'`;
-dom=` echo $domsmall | awk -F. { print $1 }'`;
-domaincont=`echo $@ | awk '{ print $4 }'`; 
+dom=` echo $domsmall | awk -F. '{ print $1 }'`;
+domaindns=`echo $@ | awk '{ print $4 }'`; 
 admin=`echo $@ | awk '{ print $2 }'`;
 pass=`echo $@ | awk '{ print $3 }'`;
 echo changing Domain to $domain.... > $web;
 echo $pass > txt/pass;
+echo search $domsmall > txt/resolv.conf
+echo nameserver  $domaindns >> txt/resolv.conf
+cp txt/resolv.conf /etc/resolv.conf
+domaincont=` host -t SRV _ldap._tcp.$domsmall | awk '{print $NF}' | rev | cut -c 2- | rev `;
 sed -e "s/DOMAIN/$dom/g" -e "s/DOMCOMP/$domcapital/g" -e "s/DOMSMALL/$domsmall/g" smb.confdomain > txt/smb.conf
-sed 
+sed -e "s/DOMAIN/$dom/g" -e "s/DOMCOMP/$domcapital/g" -e "s/DOMSMALL/$domsmall/g" -e "s/DOMCONT/$domaincont/g" krb5.confdomain > txt/krb5.conf
+sed -e "s/DOMCONT/$domaincont/g" ntp.confdomain > txt/ntp.conf
 err=`wc -c  txt/err.txt | awk '{print $1}'`;
 if [[ $err >  4  ]]; then
 	cat txt/err.txt > $web;
