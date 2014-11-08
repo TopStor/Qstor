@@ -1,0 +1,18 @@
+[logging]
+default = SYSLOG:INFO:LOCAL7
+
+[libdefaults]
+ticket_lifetime = 24000
+clock_skew = 300
+default_realm = DOMCOMP
+
+[realms]
+DOMCOMP = {
+KDC = DOMCONT:88
+admin_server = DOMCONT:464
+default_domain = DOMSMALL
+}
+
+[domain_realm]
+.domain.local = DOMCOMP
+domain.local = DOMCOMP
