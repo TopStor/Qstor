@@ -8,6 +8,7 @@ hostdns=` echo $@ | awk '{ print $4 }'`
 domcontip=` host $domcont | awk '{print $NF}'`
 echo changing Domain to $domain.... > $web;
 echo $pass > txt/pass;
+sed -e "N;s/hostname.*/hostname="hostn"
 sed -e "s/DOM/$doms/g" -e "s/DOMCONTIP/$domcontip/g" dhclient.conf > txt/dhclient.conf
 echo search $domsmall > txt/resolv.conf
 echo nameserver  $domaindns >> txt/resolv.conf
