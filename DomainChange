@@ -8,22 +8,24 @@ domshort=` echo $domc | awk -F. '{ print $1 }'`;
 admin=`echo $@ | awk '{ print $2 }'`;
 pass=`echo $@ | awk '{ print $3 }'`;
 domcont=` echo $@ | awk '{ print $4 }'`
-domcontip=` host $domcont | awk '{print $NF}'`
+domcontip=` host $domcont.$doms | awk '{print $NF}'`
 echo changing Domain to $domain.... > $web;
 echo $pass > txt/pass;
 hostn=`hostname | awk -F. '{print $1}'`;
 sed -e "s/HOSTNAME/$hostn\.$doms/g" rc.conf > txt/rc.conf
 cp txt/rc.conf /etc/rc.conf
 sed -e "s/DOMSMALL/$doms/g" -e "s/DOMIPCONT/$domcontip/g" dhclient.conf > txt/dhclient.conf
+cp txt/dhclient.conf /etc/dhclient.conf
 echo "search $doms" > txt/resolv.conf
-echo "nameserver  $domcontip" > txt/resolv.conf
+echo "domain $doms" >> txt/resolv.conf
+echo "nameserver  $domcontip" >> txt/resolv.conf
 cat /etc/resolv.conf >> txt/resolv.conf
 cp txt/resolv.conf /etc/resolv.conf
 sed -e "s/DOMSMALL/$doms/g" -e "s/DOMC/$domc/g" -e "s/DOMSH/$domshort/g" -e "s/DOMIPCONT/$domcontip/g" smb4.conf > txt/smb4.conf
 cp txt/smb4.conf /usr/local/etc/smb4.conf
 sed -e "s/DOMC/$domc/g" -e "s/DOMSMALL/$doms/g" -e "s/DOMSH/$domshort/g" -e "s/CONT/$domcont/g" krb5.conf > txt/krb5.conf
 cp txt/krb5.conf /etc/
-sed -e "s/CONT/$domcont/g" -e "s/DOMSMALL/$doms/g" ntp.conf > txt/ntp.conf
+sed -e "s/CONT/$domcont\.$doms/g" -e "s/DOMSMALL/$doms/g" ntp.conf > txt/ntp.conf
 cp txt/ntp.conf /etc/
 service ntpd stop;
 service ntpdate restart;
