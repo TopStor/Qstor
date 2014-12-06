@@ -21,7 +21,7 @@ echo "domain $doms" >> txt/resolv.conf
 echo "nameserver  $domcontip" >> txt/resolv.conf
 cat /etc/resolv.conf >> txt/resolv.conf
 cp txt/resolv.conf /etc/resolv.conf
-sed -e "s/DOMSMALL/$doms/g" -e "s/DOMC/$domc/g" -e "s/DOMSH/$domshort/g" -e "s/DOMIPCONT/$domcontip/g" smb4.conf > txt/smb4.conf
+sed -e "s/CONT/$domcont/g" -e "s/DOMSMALL/$doms/g" -e "s/DOMC/$domc/g" -e "s/DOMSH/$domshort/g" -e "s/DOMIPCONT/$domcontip/g" smb4.conf > txt/smb4.conf
 cp txt/smb4.conf /usr/local/etc/smb4.conf
 sed -e "s/DOMC/$domc/g" -e "s/DOMSMALL/$doms/g" -e "s/DOMSH/$domshort/g" -e "s/CONT/$domcont/g" krb5.conf > txt/krb5.conf
 cp txt/krb5.conf /etc/
