@@ -1,0 +1,16 @@
+#! /usr/local/bin/zsh
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+rm txt/err.txt
+echo Creating  Volume .... > $web;
+name=`echo $@ | awk '{print $2}'`;
+DG=`echo $@ | awk '{print $1}'`;
+quota=`echo $@ | awk '{print $3}'`;
+/sbin/zfs create -o quota=$quota -o dedup=on -o compression=on  $DG/$name 2> txt/err.txt 
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...Volume $DG/$name is created > $web; 
+fi;
+./GetPoolVollist
+

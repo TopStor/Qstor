@@ -1,0 +1,18 @@
+#! /usr/local/bin/zsh
+cd /TopStor
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+echo Deleteing Snapshot schedule.... > $web;
+rm txt/err.txt;
+rm txt/cronthis.txt;
+crontab -l > txt/cronthis.txt;
+snapsched=`echo $@ | awk -F@ '{print $2}'`;
+cat txt/cronthis.txt | grep -v $snapsched > txt/cronthis.txt
+crontab txt/cronthis.txt 2>txt/err.txt;
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...Snapshot $snapsched is deleted > $web; 
+fi;
+sleep 2;
+./GetPoolWeeklylist

@@ -1,0 +1,17 @@
+#! /usr/local/bin/zsh
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+rm txt/err; 
+echo Adding user.... > $web;
+username=`echo $1 | awk '{print $1}'`;
+userpass=`echo $1 | awk '{print $2}'`;
+( echo $userpass | pw useradd  $username -m -h 0 ) 2> txt/err.txt;
+( echo $userpass; echo $userpass) | /usr/local/bin/smbpasswd -s -a $username 2>> txt/err.txt;
+mkdir /Data/Common/$username;
+chown $username /Data/Common/$username;
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...user $username is added > $web; 
+fi;
+./UnixListUsers;

@@ -1,0 +1,3 @@
+#! /usr/local/bin/zsh
+web="/usr/local/www/apache24/data/des17";
+echo "Hard Coded from Factory"

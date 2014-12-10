@@ -1,0 +1,7 @@
+#! /usr/local/bin/zsh
+cd /TopStor/;
+webusers='/usr/local/www/apache24/data/des17/Data/listusers.txt';
+namearray=( `cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 | grep -v moataz ` ); 
+nameforjson=`echo $namearray | sed 's/ /:/g'` ;
+jsonname=`./jsonthis.sh $nameforjson`;
+echo $jsonname >$webusers ;

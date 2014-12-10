@@ -1,0 +1,17 @@
+#! /usr/local/bin/zsh
+web="/usr/local/www/apache24/data/des17";
+if [[ $1 < 2 ]]; then
+	disks=('ada1');
+else
+	disks=(`/sbin/sysctl kern.disks | sed -e 's/cd0 //g' -e  's/ada0//g' -e 's/kern.disks: //g'`);
+fi
+size=0;
+for disk in  $disks
+do
+x=`diskinfo -v $disk | sed -n -e 3p | awk '{print $1}'`;
+y=$(($x/1024/1024/1024));
+size=$(($size+$y));
+done
+jsonsize=`./jsonthis.sh $size`
+echo $jsonsize > $web/$2;
+

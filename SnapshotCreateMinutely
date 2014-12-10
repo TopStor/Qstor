@@ -1,0 +1,20 @@
+#! /usr/local/bin/zsh
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+rm txt/err.txt
+rm txt/cronthis.txt
+echo Adding snapshot schedule.... > $web;
+every=0; ev=`echo $@ | awk '{print $1}'`; every=$(($every+$ev)) ; if (($every < 1)); then every=1; fi
+keep=0; k=`echo $@ | awk '{print $2}'`; keep=$(($keep+$k)); if (($keep < 1)); then keep=1 ; fi
+ 
+DG=` echo $@ | awk '{print $3}'`; 
+FileS=` echo $@ | awk '{print $4}'`;
+crontab -l > txt/cronthis.txt
+echo "*"/$every "*" "*" "*" "*"  /TopStor/Snapshotnow $DG/$FileS Minutely.$every.$keep 2> txt/err.txt >> txt/cronthis.txt
+crontab txt/cronthis.txt 2>>txt/err.txt
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...Snapshot Minutely.$every.$keep is added > $web; 
+fi;
+./GetPoolMinutelylist >> $web

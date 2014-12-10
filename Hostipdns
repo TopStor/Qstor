@@ -1,0 +1,25 @@
+#! /usr/local/bin/zsh
+web='/usr/local/www/apache24/data/des17/Data/status.log';
+rm txt/err; 
+hostn=`echo $@ | awk '{ print $1 }' `;
+hostip=`echo $@ | awk '{ print $2 }'`;
+hostrout=`echo $@ | awk '{ print $3 }'`;
+hostdns=` echo $@ | awk '{ print $4 }'`
+domcontip=` host $domcont | awk '{print $NF}'`
+echo changing Domain to $domain.... > $web;
+echo $pass > txt/pass;
+sed -e "N;s/hostname.*/hostname="hostn"
+sed -e "s/DOM/$doms/g" -e "s/DOMCONTIP/$domcontip/g" dhclient.conf > txt/dhclient.conf
+echo search $domsmall > txt/resolv.conf
+echo nameserver  $domaindns >> txt/resolv.conf
+cp txt/resolv.conf /etc/resolv.conf
+domaincont=` host -t SRV _ldap._tcp.$domsmall | awk '{print $NF}' | rev | cut -c 2- | rev `;
+sed -e "s/DOMAIN/$dom/g" -e "s/DOMCOMP/$domcapital/g" -e "s/DOMSMALL/$domsmall/g" smb.confdomain > txt/smb.conf
+sed -e "s/DOMAIN/$dom/g" -e "s/DOMCOMP/$domcapital/g" -e "s/DOMSMALL/$domsmall/g" -e "s/DOMCONT/$domaincont/g" krb5.confdomain > txt/krb5.conf
+sed -e "s/DOMCONT/$domaincont/g" ntp.confdomain > txt/ntp.conf
+err=`wc -c  txt/err.txt | awk '{print $1}'`;
+if [[ $err >  4  ]]; then
+	cat txt/err.txt > $web;
+else 
+ echo DONE...user $username is added > $web; 
+fi;
