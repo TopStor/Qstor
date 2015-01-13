@@ -25,14 +25,14 @@ then
 fi
 os=`uname`
 Device=$1
-iostat -x  $Device|
+iostat -x $Device |
 awk -F" " '
 	BEGIN {
-		cmd="date +%m-%d-%Y...%H:%M:%S"
+		cmd="date +%m:%d:%Y-%H:%M:%S"
 		printf "%s%s%s%s%s%s%s%s\n", \
-		"<<Device>> |","    Date   -|-  Time   |"," <<kread/s>> |"," <<kwrite/s>> |"," <<IO r/s>> |"," <<IO w/s>> |"," <<srv_c>> |"," <<qlen>> |"}
+		"<<Device>>|","   Date   -|-  Time  |","<<kread/s>>|","<<kwrite/s>>|","<<IO r/s>>|","<<IO w/s>>|","<<srv_c>>|","<<qlen>>|"}
 		NF==8,NR==NR{ cmd|getline now; \
-		printf("%-10s | %s | %-12.2f| %-13.2f| %-11.2f| %-11.2f| %-10.2f| %-9d|\n",$1,now,$4,$5,$2,$3,$7,$6)
+		printf("%-7s   | %s |%-9.1f  |%-10.1f  |%-8.1f  |%-8.1f  |%-7.1f  |%-6d  |\n",$1,now,$4,$5,$2,$3,$7,$6)
 		close(cmd) 
 	     }'
 
