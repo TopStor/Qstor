@@ -26,17 +26,17 @@ fi
 os=`uname`
 Device=$1
 xflag=`iostat -x $Device`
-dflag=`iostat -d $Device | awk 'NR==3 { print $3}'`
-iostat=`echo -n $xflag ; echo \   $dflag`
+dflag=`iostat -d $Device | awk -F" " 'NR==3{printf("%8.3f",$3)}'`
+iostat=`echo -n $xflag ;echo \   $dflag`
 echo $iostat |
 awk -F" " '
 	BEGIN {
 		
 		cmd="date +%m:%d:%Y-%H:%M:%S"
 		printf "%s%s%s%s%s%s%s\n", \
-		"<<Device>>|","   Date   -|-  Time  |","<<Bandwidth MB/s>>|","<<IO r/s>>|","<<IO w/s>>|","<<srv_c>>|","<<qlen>>|"}
+		"<<Device>>|","   Date   -|-  Time  |","<<Bandwidth KB/s>>|","<<IO r/s>>|","<<IO w/s>>|","<<srv_c>>|","<<qlen>>|"}
 		NF==9,NR>=2{ cmd|getline now;\
-		printf("%-7s   | %s |%-16.3f  |%-8.1f  |%-8.1f  |%-7.1f  |%-6d  |\n",$1,now,$9,$2,$3,$7,$6)
+		printf("%-7s   | %s |%-16.3f  |%-8.1f  |%-8.1f  |%-7.1f  |%-6d  |\n",$1,now,$9*1024,$2,$3,$7,$6)
 		close(cmd)
 	     }'
 
