@@ -27,7 +27,7 @@ os=`uname`
 Device=$1
 xflag=`iostat -x $Device | awk -F" " 'NR==3{printf("%-7s%-8.1f%-8.1f%-8.1f%-8.1f%-8.1f%-8.1f%-6d",$1,$2,$3,$4,$5,$6,$7,$8)}'`
 dflag=`iostat -d $Device | awk -F" " 'NR==3{printf("%8.3f",$3*1024)}'`
-iostat=`echo $xflag ;echo -n $dflag`
+iostat=`echo -n $xflag ;echo  $dflag`
 echo $iostat |
 awk -F" " '
 	BEGIN {
