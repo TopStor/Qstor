@@ -9,9 +9,6 @@ json1=`echo "{\"Date\":\"$date\",\"times\":[\n"$json"\n]}"`
 search=`echo $json1 | grep $Time`
 pre=`echo $json1 | grep -B99999999 $Time| grep -v $Time | tr "\n" "," | sed 's:\[,:\[:'` 
 post=`echo $json1 | grep -A99999999 $Time| grep -v $Time| tr "\n" ","|sed 's:^:,:'|sed 's:,]},$:]}:'`
-#echo "===================== pre ==================="
 echo $pre
-#echo "=================== search =================="
 echo $search
-#echo "===================== post ==================="
 echo $post
