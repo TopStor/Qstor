@@ -17,7 +17,7 @@ echo $search
 echo $post
 else
 json=`echo $json`
-pre=`echo "{\"name\":\"$device\",\"stats\":[{\"Dates\":[\n"$json"\n"`
+pre=`echo "{\"name\":\"$device\",\"stats\":[{\"Dates\":[\n"$json"\n"|tr "\n" ","| sed 's:\[,:\[:' | sed 's:\]},,:]},:'| sed 's:\[,,:[:' `
 search=`echo "{\"Date\":\"$date\",\"times\":[]}"`
 post=`echo "]}]}"`
 echo $pre
