@@ -9,7 +9,14 @@ echo $dates | grep $date > /dev/null 2>&1
 if [ $? -ne 1 ]
 then
 json1=`echo "{\"name\":\"$device\",\"stats\":[{\"Dates\":[\n"$json"\n]}]}"`
-search=`echo $json1 | grep $date`
+echo $json1 |grep $date | grep "times" > /dev/null 2>&1
+	if [ $? -ne 1 ]
+	then
+	search=`echo $json1 | grep $date`
+	else
+	search=`echo  "{\"Date\":\"$date\",\"times\":[]}"`
+	fi
+search=`echo $search`
 pre=`echo $json1 | grep -B99999999 $date| grep -v $date | tr "\n" "," | sed 's:\[,:\[:'` 
 post=`echo $json1 | grep -A99999999 $date| grep -v $date| tr "\n" ","|sed 's:^:,:'|sed 's:,]}]},$:]}]}:'`
 echo $pre
