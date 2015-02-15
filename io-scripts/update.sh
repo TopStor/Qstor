@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/local/bin/zsh
 cd /root/update
 git checkout -b hotfix
 tar -xvzf *.tar.gz
