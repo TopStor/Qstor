@@ -8,6 +8,7 @@ post=`echo $searchdate1 | awk 'NR==3{printf"%s",$1}'`
 search=`echo $searchdate1 | awk 'NR==2{printf"%s",$1}'`
 search1=`echo $search | jq -c '.[]' |awk 'NR==2{printf"%s",$1}'|jq -c '.[]'`
 echo $search1 | grep time > /dev/null 2>&1
+echo "========================================================"
 if [ $? -ne 1 ]
 then
 search=`echo $search | sed "s/]}/,$oper]}/"`
