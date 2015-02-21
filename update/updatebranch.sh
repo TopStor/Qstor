@@ -4,7 +4,7 @@ git init
 git add *
 git commit -a -m 'add'
 git checkout -b hotfix
-cp /*-update.patch /scripts
+cp /patchs.tar.gz /scripts
 git am *-update.patch
 git checkout master
 git merge hotfix
