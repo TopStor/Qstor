@@ -4,7 +4,7 @@ git init
 git add *
 git commit -a -m 'add'
 git checkout -b hotfix
-cp /update.tar.gz /scripts
+mv /update.tar.gz /scripts
 tar -xvzf update.tar.gz
 rm -rf update.tar.gz
 git am *-update.patch
