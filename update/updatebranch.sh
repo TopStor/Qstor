@@ -5,8 +5,6 @@ then
 echo "Good Update File"
 cd /scripts
 git init > /dev/null 2>&1 
-#git add * > /dev/null 2>&1
-#git commit -a -m 'add' > /dev/null 2>&1
 git checkout -b hotfix > /dev/null 2>&1
 gpg -d -o /update.tar.gz /qstor.bin > /dev/null 2>&1
 mv /update.tar.gz /scripts > /dev/null 2>&1
