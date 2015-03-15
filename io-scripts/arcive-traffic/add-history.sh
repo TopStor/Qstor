@@ -17,7 +17,7 @@ pre=`echo $searchdevice | awk 'NR==1{printf"%s",$1}'`
 post=`echo $searchdevice | awk 'NR==3{printf"%s",$1}'`
 search=`echo $afteradd`
 end=`echo -n $pre ; echo -n $search ; echo $post;`
-echo $end > historytraffic.log 
+echo $end > backupjson/currenttraffic.log
 else
 search=`echo $search | sed "s/]}/$oper]}/"`
 afteradd=`echo -n $pre ; echo -n $search ; echo $post;`
@@ -26,5 +26,5 @@ pre=`echo $searchdevice | awk 'NR==1{printf"%s",$1}'`
 post=`echo $searchdevice | awk 'NR==3{printf"%s",$1}'`
 search=`echo $afteradd`
 end=`echo -n $pre ; echo -n $search ; echo $post;`
-echo $end > historytraffic.log
+echo $end > backupjson/currenttraffic.log
 fi

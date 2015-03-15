@@ -1,7 +1,6 @@
 #!/usr/local/bin/zsh
 device=$1
-#device=`echo $device`
-logs=`cat historytraffic.log`
+logs=`cat backupjson/currenttraffic.log`
 devices=`echo $logs | jq '.[]|.[] | .name'| sed 's:"::' | sed 's:"::'`
 json=`echo $logs | jq  -c '.[]'`
 json1=`echo $json | jq -c '.[]'`

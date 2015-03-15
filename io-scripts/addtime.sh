@@ -1,4 +1,5 @@
 #!/usr/local/bin/zsh
+touch currenttraffic.log
 device=$1
 date=$2
 oper=$3

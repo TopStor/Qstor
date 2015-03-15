@@ -11,7 +11,7 @@
 #- IOSTAT  is  used  to report about disk I/O activity and throughput.	 -#
 #--------------------------BEGIN PROGRAM----------------------------------#
 
-which iostat > /dev/null 2>&1
+#which iostat > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
   echo "iostat command not found!"
