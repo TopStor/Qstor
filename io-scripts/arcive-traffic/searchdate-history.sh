@@ -1,7 +1,8 @@
 #!/usr/local/bin/zsh
 device=$1
 date=$2
-search1=`./searchdevice-history.sh $device`
+logs=$3
+search1=`./searchdevice-history.sh $device $logs`
 search1=`echo $search1 | awk 'NR==2{printf"%s",$1}'`
 dates=`echo $search1 | jq -c '.[]'| awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.Date'| sed 's:"::' | sed 's:"::'`
 json=`echo $search1 | jq -c '.[]'| awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]'`

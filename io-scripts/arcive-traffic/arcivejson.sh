@@ -1,51 +1,55 @@
 #!/usr/local/bin/zsh
-readlog=`cat backupjson/currenttraffic.log`
+backupdir=$1
+endlog=$2
+readlog=`cat $endlog`
 echo $readlog | jq -c '.[]'  > /dev/null 2>&1
 if [ $? -ne 0  ]
 then
-echo "" > backupjson/currenttraffic.log
-filenum=`ls -l backupjson/currenttraffic.log.* | awk 'NR>=2{printf"%s\n",$9}' | awk -F "." '{printf"%s\n",$3}'`
+echo "" > $endlog
+logdb=`cd $backupdir ; ls -l`
+origname=`echo $logdb | awk 'NR>=3{printf"%s\n",$9}' | awk -F "0" '{printf"%s\n",$1}'|awk 'END{print}'`
+filenum=`echo $logdb | awk 'NR>=2{printf"%s\n",$9}' | awk -F "." '{printf"%s\n",$3}'`
 for num in `echo $filenum`
 do
-logs=`cat backupjson/currenttraffic.log.$num`
+logs=`cd $backupdir ; cat $origname$num`
 devices=`echo $logs | jq '.[]|.[] | .name'| sed 's:"::' | sed 's:"::'`
-dates=`echo $logs | jq -c '.[]|.[]' | grep ad0 | jq -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]| .Date'`
 for dev in `echo $devices`
 do
 json=`echo $logs | jq  -c '.[]|.[]'`
 grep=`echo $json | grep "$dev"`
 json=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]'`
-date=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.Date'|sed 's:"::'|sed 's:"::'`
-	for date in `echo $date`
+dates=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.Date'|sed 's:"::'|sed 's:"::'`
+	for date in `echo $dates`
 	do
 	grep=`echo $json| grep "$date"`
 	Times=`echo $grep | jq -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]'| tr "\n" ","|sed 's:,$::'`
-	./add-history.sh $dev $date $Times
+	./add-history.sh $dev $date $endlog $Times
 	done
 done
+cd $backupdir ; rm $origname$num ; cd -
 done
-rm  backupjson/currenttraffic.log.*
 else
-filenum=`ls -l backupjson/currenttraffic.log.* | awk 'NR>=2{printf"%s\n",$9}' | awk -F "." '{printf"%s\n",$3}'`
+logdb=`cd $backupdir ; ls -l`
+origname=`echo $logdb | awk 'NR>=3{printf"%s\n",$9}' | awk -F "0" '{printf"%s\n",$1}'|awk 'END{print}'`
+filenum=`echo $logdb | awk 'NR>=2{printf"%s\n",$9}' | awk -F "." '{printf"%s\n",$3}'`
 for num in `echo $filenum`
 do
-logs=`cat backupjson/currenttraffic.log.$num`
+logs=`cd $backupdir ; cat $origname$num`
 devices=`echo $logs | jq '.[]|.[] | .name'| sed 's:"::' | sed 's:"::'`
-dates=`echo $logs | jq -c '.[]|.[]' | grep ad0 | jq -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]| .Date'`
 for dev in `echo $devices`
 do
 json=`echo $logs | jq  -c '.[]|.[]'`
 grep=`echo $json | grep "$dev"`
 json=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]'`
-date=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.Date'|sed 's:"::'|sed 's:"::'`
-        for date in `echo $date`
+dates=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.Date'|sed 's:"::'|sed 's:"::'`
+        for date in `echo $dates`
         do
         grep=`echo $json| grep "$date"`
         Times=`echo $grep | jq -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]'| tr "\n" ","|sed 's:,$::'`
-        ./add-history.sh $dev $date $Times
+	./add-history.sh $dev $date $endlog $Times
         done
 done
+cd $backupdir ; rm $origname$num ; cd -
 done
-rm  backupjson/currenttraffic.log.*
 fi
 
