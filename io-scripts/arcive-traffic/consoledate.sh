@@ -58,4 +58,3 @@ dates=`echo $grep | jq  -c '.[]'|awk 'NR==2{printf"%s",$1}'|jq -c '.[]|.[]|.[]|.
 done
 done
 fi
-
