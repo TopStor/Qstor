@@ -1,6 +1,7 @@
 #!/usr/local/bin/zsh
 currentlog=$1
 backupdir=$2
+backupdir=`echo $backupdir | sed 's:/$::g' | awk '{print $0"/"}'`
 origfile=`echo $1 | tr "/" "\n"|awk 'END{print}'`
 logdb=`cd $backupdir ; ls -l $origfile*`
 filenum=`echo $logdb | awk 'NR>=2{printf"%s\n",$9}' | awk -F "." '{printf"%s\n",$3}'`
